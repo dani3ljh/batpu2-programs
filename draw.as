@@ -32,6 +32,8 @@ HLT
 .draw_line
 	// r5 = dx = x1 - x0
 	SUB r3 r1 r5
+	
+	// r8 = for loop amount
 	MOV r5 r8
 	
 	// r6 = 2*dy = 2*(y1 - y0)
@@ -47,9 +49,10 @@ HLT
 	.for_loop
 		CAL .plot_point
 		
-		// if p >= 0
+		// if p > 0
 		CMP r7 r0
-		BRH GE .end_if
+		BRH EQ .end_if
+		BRH LT .end_if
 			INC r2
 			// p -= 2*dx
 			SUB r7 r5 r7
@@ -57,9 +60,17 @@ HLT
 		// p += 2*dy
 		ADD r7 r6 r7
 		
-		// if x < x1 continue for loop
+		// if x  x1 continue for loop
 		INC r1
 		DEC r8
-		CMP r8 r0
-		BRH NE .for_loop
+		
+		// if p > 0
+		CMP r7 r0
+		BRH LT .end_for_loop
+		BRH EQ .end_for_loop
+		JMP .for_loop
+	.end_for_loop
+	MOV r4 r2
+	CAL .plot_point
+	
 	RET
