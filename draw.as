@@ -43,13 +43,17 @@ HLT
 	// r5 = 2*dx
 	LSH r5 r5
 	
+	LDI r8 128 // start of negative numbers
+	
 	.for_loop
 		CAL .plot_point
 		
-		// if p > 0
+		// if p > 0 and not negative
 		CMP r7 r0
 		BRH EQ .end_if
 		BRH LT .end_if
+		CMP r7 r8
+		BRH GE .end_if
 			INC r2
 			// p -= 2*dx
 			SUB r7 r5 r7
