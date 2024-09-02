@@ -52,5 +52,5 @@ def drawLine():
             break
 
 reg["r1"] = 0; reg["r2"] = 0
-reg["r3"] = 5; reg["r4"] = 3
+reg["r3"] = 255; reg["r4"] = 253
 drawLine()
